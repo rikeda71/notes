@@ -1,3 +1,3 @@
-export function test(arg) {
+export function test(arg: any) {
   return arg;
 }
