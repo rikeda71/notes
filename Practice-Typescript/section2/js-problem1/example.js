@@ -1,4 +1,4 @@
-function expo2(amount) {
+function expo2(amount: number) {
   return amount ** 2;
 }
 const value = expo2('1,000');
