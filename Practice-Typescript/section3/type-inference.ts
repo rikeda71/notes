@@ -153,3 +153,60 @@ function getScoreAmount(score: 'A' | 'B' | 'C') {
 /*
 function getScoreAmount(score: 'A' | 'B' | 'C'): 100 | 60 | 30
  */
+
+// Promiseの型推論
+// 以下の形だと、Promiseの中の型を推論できない
+/*
+function wait(duration: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(`${duration}ms passed`), duration);
+  });
+}
+*/
+// 以下のように返り値のアノテーションをつける
+function wait(duration: number): Promise<{}> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(`${duration}ms passed`), duration);
+  });
+}
+wait(1000).then((res) => {});
+
+// resolve関数の引数指定
+// どちらでもOK
+function wait1(duration: number): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(`${duration}ms passed`), duration);
+  });
+}
+function wait2(duration: number) {
+  return new Promise<string>((resolve) => {
+    setTimeout(() => resolve(`${duration}ms passed`), duration);
+  });
+}
+wait1(1000).then((res) => {});
+
+// async await を使うことで、Promiseの中の型のができる
+// async関数の返り値もPromise型
+async function queue() {
+  const message = await wait1(1000); // const message: string
+  return message;
+}
+
+function waitThenNumber(duration: number) {
+  return new Promise<number>((resolve) => {
+    setTimeout(() => resolve(duration), duration);
+  });
+}
+
+function waitAll() {
+  return Promise.all([wait1(10), waitThenNumber(100), wait2(1000)]);
+} // function waitAll(): Promise<[string, number, string]>
+
+function waitRace() {
+  return Promise.race([wait1(10), waitThenNumber(100), wait2(1000)]);
+} // function waitRace(): Promise<string | number>
+
+async function main() {
+  const [a, b, c] = await waitAll(); // a: string, b: number, c: string
+  const result = await waitRace(); // result: string | number
+}
