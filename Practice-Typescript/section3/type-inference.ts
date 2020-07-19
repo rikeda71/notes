@@ -115,3 +115,41 @@ const objWithAssertion = {
   baz: '2' as '2',
 };
 objWithAssertion['foo'] = true; // error
+
+// 関数の戻り型推論
+function getPriceLabel(amount: number, tax: number) {
+  return `￥${amount * tax}`;
+}
+/*
+function getPriceLabel(amount: number, tax: number): string
+*/
+
+function log(message: string) {
+  console.log(message);
+}
+/*
+function log(message: string): void
+*/
+
+// Union Type
+function getScore(score: number) {
+  if (score < 0 || score > 100) return null;
+  return score;
+}
+/*
+function getScore(score: number): number | null
+*/
+
+function getScoreAmount(score: 'A' | 'B' | 'C') {
+  switch (score) {
+    case 'A':
+      return 100;
+    case 'B':
+      return 60;
+    case 'C':
+      return 30;
+  }
+}
+/*
+function getScoreAmount(score: 'A' | 'B' | 'C'): 100 | 60 | 30
+ */
