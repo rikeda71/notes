@@ -90,3 +90,28 @@ console.log(list);
 
 let message = list.reduce((prev, current) => `${prev} ${current}`);
 console.log(message);
+
+// objectの型推論
+const obj = {
+  foo: false,
+  bar: 1,
+  baz: '2',
+};
+/*
+const obj = {
+  foo: boolean,
+  bar: number,
+  baz: string
+}
+*/
+
+obj['foo'] = true;
+obj['foo'] = 0; // error
+
+// with assertion
+const objWithAssertion = {
+  foo: false as false,
+  bar: 1 as 1,
+  baz: '2' as '2',
+};
+objWithAssertion['foo'] = true; // error
