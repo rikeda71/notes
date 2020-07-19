@@ -1,0 +1,28 @@
+[
+    {
+        "id": 0,
+        "created_at": "Thu Jan 24 2019 14:34:32 GMT+0900",
+        "profile": {
+            "name": {
+                "first": "Taro",
+                "last": "Yamada"
+            },
+            "age": 28,
+            "gender": "male",
+            "enabled": true
+        }
+    },
+    {
+        "id": 1,
+        "created_at": "Thu Jan 24 2019 14:34:32 GMT+0900",
+        "profile": {
+            "name": {
+                "first": "Hanako",
+                "last": "Suzuki"
+            },
+            "age": 26,
+            "gender": "female",
+            "enabled": false
+        }
+    }
+]
