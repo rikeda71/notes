@@ -24,7 +24,7 @@ console.log(getFormattedValueWithDefaultValue(100, 0)); // error because unit: s
 
 // type safe
 type User = {
-  age?: string;
+  age?: number;
   name?: string;
 };
 function registerUser(user: User) {}
@@ -44,3 +44,19 @@ registerUser(maybeUser);
 registerUser(notUser); // compile error
 registerUser({}); // no error
 registerUser(); // error
+
+// Excess Property Checks（過剰なプロパティチェック）
+// オブジェクトを直接引数に渡す場合はエラーが出る
+registerUser({
+  age: 26,
+  name: 'Taro',
+  gender: 'male',
+});
+// スプレッド演算子を使った場合、エラーが起こらない
+registerUser({
+  ...{
+    age: 26,
+    name: 'Taro',
+    gender: 'male',
+  },
+});
