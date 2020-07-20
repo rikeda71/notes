@@ -21,3 +21,26 @@ function getFormattedValueWithDefaultValue(value: number, unit = 'pt') {
 console.log(getFormattedValueWithDefaultValue(100));
 console.log(getFormattedValueWithDefaultValue(100, 'kg'));
 console.log(getFormattedValueWithDefaultValue(100, 0)); // error because unit: string
+
+// type safe
+type User = {
+  age?: string;
+  name?: string;
+};
+function registerUser(user: User) {}
+
+// type safe of weak type
+const maybeUser = {
+  age: 26,
+  name: 'Taro',
+  gender: 'male',
+};
+// 型と一致するプロパティを1つも持たないオブジェクト
+const notUser = {
+  gender: 'male',
+  graduate: 'Tokyo',
+};
+registerUser(maybeUser);
+registerUser(notUser); // compile error
+registerUser({}); // no error
+registerUser(); // error
