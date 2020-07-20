@@ -60,3 +60,27 @@ registerUser({
     gender: 'male',
   },
 });
+
+// read only property
+type State = {
+  readonly id: number;
+  name: string;
+};
+
+const state: State = {
+  id: 1,
+  name: 'Taro',
+};
+state.name = 'Hanako';
+state.id = 2; // compile error
+
+const state2: Readonly<State> = {
+  id: 1,
+  name: 'Taro',
+};
+
+state2.name = 'Hanako'; // compile error
+
+// Object.freezeの型推論
+const frozenState = Object.freeze(state);
+frozenState.name = 'Hanako'; // compile error
