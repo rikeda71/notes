@@ -45,22 +45,3 @@ const userA: User = {
   name: 'Taro',
   age: 26, // error
 };
-
-// 一定のプロパティ以外を自由に追加する方法
-type UserWithUnknownProperty = {
-  name: string;
-  [k: string]: any; // index signature
-  // 以下のように定義すると、nameでコンパイルエラーが出る
-  // `number`とnameに付与されている`string`に互換性がないため
-  // [k: string]: number;
-  // 以下なら定義可能
-  // nameはstringであるから
-  // [k: string]: number | string;
-};
-
-const userB: UserWithUnknownProperty = {
-  name: 'Taro',
-  age: 26, // no error
-};
-const x = userB.name; // string
-const y = userB.age; // any. index signatureについた型に推論される
