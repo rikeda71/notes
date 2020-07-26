@@ -124,3 +124,29 @@ function getUserType(user: any) {
 }
 
 const x = getUserType({ name: 'Taro' }); // const x: 'A' | 'B' | unknown
+
+// Type guards with Arrayfilter
+type AUser = { name: string };
+type AUserA = AUser & { gender: 'male' | 'female' | 'other' };
+type AUserB = AUser & { graduate: string };
+
+// 以下の方法では、型が絞りこめていない
+const users: (AUserA | AUserB)[] = [
+  { name: 'Taro', gender: 'male' },
+  { name: 'Hanako', graduate: 'Tokyo' },
+];
+// const filteredUsers: (AUserA | AUserB)[]
+const filteredUsers = users.filter((user) => 'graduate' in user);
+
+// ユーザ定義ガード節が付与された関数を併用することで解決
+function filterUser(user: AUserA | AUserB): user is AUserB {
+  return 'graduate' in user;
+}
+// const filteredUsersWithFunc: AUserB[]
+const filteredUsersWithFunc = users.filter(filterUser);
+
+// 匿名関数でも可能
+// const filteredUsersWithAnonyFunc: AUserB[]
+const filterdUsersWithAnonyFunc = users.filter(
+  (user: AUserA | AUserB): user is UserB => 'graduate' in user
+);
