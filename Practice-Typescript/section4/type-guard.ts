@@ -68,3 +68,59 @@ function action(creature: Animal | Human | Creature) {
   const c4 = creature; // const c4: Creature
   return c4.breathe();
 }
+
+// Discriminated Union / Tagged union
+// 与えられる引数のUnion Typesの全てが共通プロパティをもち、
+// その型がLiteral Typesである場合、条件分岐によって、型の絞り込みができる
+type UUserA = { gender: 'male'; name: string };
+type UUserB = { gender: 'female'; age: number };
+type UUserC = { gender: 'other'; graduate: string };
+
+function judgeUserTypeWithGender(user: UUserA | UUserB | UUserC) {
+  switch (user.gender) {
+    case 'male':
+      const u0 = user; // const u0: UUserA
+      return 'user type is UserA';
+    case 'female':
+      const u1 = user; // const u1: UUserB
+      return 'user type is UserB';
+    case 'other':
+      const u2 = user; // const u2: UUserC
+      return 'user type is UserC';
+    default:
+      const u3 = user; // const u3: never
+      return 'user type is never';
+  }
+}
+
+// ユーザ定義type guards
+// argument is Type のように記述することで、
+// 匿名巻数の戻り値アノテーションの型を決定することができる
+type TGUser = { gender: string; [k: string]: any };
+type TGUserA = TGUser & { name: string };
+type TGUserB = TGUser & { age: number };
+
+function isTGUserA(user: TGUserA | TGUserB): user is TGUserA {
+  return user.name !== undefined;
+}
+
+function isTGUserB(user: TGUserA | TGUserB): user is TGUserB {
+  return user.age !== undefined;
+}
+
+// 与えられる引数でも適応可能
+
+function getUserType(user: any) {
+  const u0 = user; // const u0: any
+  if (isTGUserA(user)) {
+    const u1 = user; // TGUserA
+    return 'A';
+  }
+  if (isTGUserB(user)) {
+    const u2 = user; // TGUserB
+    return 'B';
+  }
+  return 'unknown';
+}
+
+const x = getUserType({ name: 'Taro' }); // const x: 'A' | 'B' | unknown
