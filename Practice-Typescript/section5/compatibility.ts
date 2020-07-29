@@ -63,3 +63,38 @@ O4 = O2; // error
 let O5 = {};
 O5 = O4;
 O4 = O5; // error
+
+// 関数型の互換性
+let fn1 = (a1: number) => {};
+let fn2 = (a2: string) => {};
+// error
+fn1 = fn2;
+fn2 = fn1;
+
+let fn3 = (a: number, s: string) => {};
+// ok
+fn3 = fn1;
+// NG（引数の順番的に解釈できない）
+fn3 = fn2;
+// NG
+fn1 = fn3;
+fn2 = fn3;
+
+// classの互換性
+class CAnimal {
+  feet: number = 4;
+  constructor(name: string, numFeet: number) {}
+}
+
+type TGender = 'male' | 'female';
+class CHuman {
+  feet: number = 2;
+  hands: number = 2;
+  constructor(name: string, gender: TGender) {}
+}
+
+// Humanはfeetとhandsの両方を持っているため、animalは代入できない
+let animal: CAnimal = new CAnimal('dog', 4);
+let human: CHuman = new CHuman('Taro', 'male');
+animal = human; // ok
+human = animal; // error
