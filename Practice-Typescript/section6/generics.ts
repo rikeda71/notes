@@ -65,3 +65,39 @@ const value1 = pick(obj, 'name');
 const value2 = pick(obj, 'amount');
 const value3 = pick(obj, 'flag');
 const value4 = pick(obj, 'test'); // error; objの中にtestは存在しない
+
+// クラスのGenerics
+// クラスの宣言時にGenericsを利用すると、コンストラクタの引数を制約できる
+class Person<T extends string> {
+  name: T;
+  constructor(name: T) {
+    this.name = name;
+  }
+}
+const person = new Person('Taro');
+const personName = person.name; // const personName: 'Taro'
+
+// オブジェクトを引数にとる場合
+// interfaceを制約に設けることで、「Indexed Access Types」を利用した型の付与ができる
+interface PersonProps {
+  name: string;
+  age: number;
+  gender: 'male' | 'female' | 'other';
+}
+class OPerson<T extends PersonProps> {
+  name: T['name'];
+  age: T['age'];
+  gender: T['gender'];
+
+  constructor(props: T) {
+    this.name = props.name;
+    this.age = props.age;
+    this.gender = props.gender;
+  }
+}
+
+const operson = new OPerson({
+  name: 'Taro',
+  age: 28,
+  gender: 'male',
+});
