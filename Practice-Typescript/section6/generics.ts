@@ -39,7 +39,7 @@ const fbox3 = boxed(null);
 
 /// アサーションによる明示的な型の付与
 /// Nullable型などを直接適応したい場合に使う
-const fbox4 = boxed(false as booelan | null);
+const fbox4 = boxed(false as boolean | null);
 const fbox5 = boxed<string | null>(null);
 /// 関数の代入は以下のようにもできる
 const boxed2 = <T>(props: T) => ({ value: props });
