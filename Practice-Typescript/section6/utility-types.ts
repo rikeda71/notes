@@ -72,3 +72,34 @@ type WithoutBirthplace = {
     gender: 'male' | 'female' | 'other';
 }
 */
+
+// 新しい組み込みObject Types
+// typescript2.8以降で実装
+
+/// Exclude型
+/// Exclude<T,U>はT型からU型と互換性のある型を取り除いた型を生成
+type EX = Exclude<'a' | 'b', 'b'>; // "a"
+type EY = Exclude<'a' | (() => void), Function>; // "a"
+
+/// Extract型
+/// Extract<T,U>は、T型からU型と互換性のある型を残し、新しい型を生成
+type EX2 = Extract<'a' | 'b', 'b'>; // 'b'
+type EY2 = Extract<'a' | (() => void), Function>; // () => void
+
+/// NonNullable型
+/// NonNullable<T>はT型からnull、undefinedを除いた、新しい型を生成
+type NX = NonNullable<string | null | undefined>; // string
+
+/// ReturnType型
+/// 関数型の返却値を持つ型を生成
+type RX = ReturnType<() => string>;
+type RY = ReturnType<string>; // error
+
+/// InstanceType型
+/// InstanceType<T> はコンストラクタ関数がたのインスタンス型を取得できる
+class C {
+  x = 0;
+  y = 0;
+}
+type IX = InstanceType<typeof C>;
+const n = {} as IX; // { x: number; y: number; }
