@@ -103,3 +103,85 @@ class C {
 }
 type IX = InstanceType<typeof C>;
 const n = {} as IX; // { x: number; y: number; }
+
+// 公式提唱Utility Types
+// 公式ドキュメントで提唱されているものの、標準で組み込まれてはいない型定義
+
+/// TypeName型
+/// TypeName<T>はGenericsに互換性のある方が適応された場合
+/// それに対応するString Literal Typesを返却する型
+type TypeName<T> = T extends string
+  ? 'string'
+  : T extends number
+  ? 'number'
+  : T extends boolean
+  ? 'boolean'
+  : T extends undefined
+  ? 'undefined'
+  : T extends Function
+  ? 'function'
+  : 'object';
+
+type T0 = TypeName<string>; // "string"
+type T1 = TypeName<'a'>; // "string"
+type T2 = TypeName<true>; // "boolean"
+type T3 = TypeName<() => void>; // "function"
+type T4 = TypeName<string[]>; // "object"
+
+/// FunctionProperties型
+/// Mapped Typesを併用し、Object型から関数型のみのプロパティ名を抽出し、
+/// その名称を元に関数型のみの新しい型を作る型
+interface Part {
+  id: number;
+  name: string;
+  subparts: Part[];
+  updatePart(newName: string): void;
+}
+
+type FunctionPropertyNames<T> = {
+  [K in keyof T]: T[K] extends Function ? K : never;
+}[keyof T];
+
+type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
+type X = FunctionPropertyNames<Part>; // "updatePart"
+type Y = FunctionProperties<Part>;
+/*
+type Y = {
+    updatePart: (newName: string) => void;
+}
+*/
+
+/// NonFunctionProperties型
+/// Mapped Typesを併用し、Object型から関数型以外のプロパティ名を抽出し、
+/// その名称を元に関数型を除いた新しい型を作る型
+type NonFunctionPropertyNames<T> = {
+  [K in keyof T]: T[K] extends Function ? never : K;
+}[keyof T];
+
+type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+type NonX = NonFunctionPropertyNames<Part>; // type NonX = "id" | "name" | "subparts"
+type NonY = NonFunctionProperties<Part>;
+/*
+type NonY = {
+    id: number;
+    name: string;
+    subparts: Part[];
+}
+*/
+
+/// Unpacked型
+/// 配列要素型、関数戻り型、Promise.resolve引数型を取得する型
+type Unpacked<T> = T extends (infer U)[]
+  ? U
+  : T extends (...args: any[]) => infer U
+  ? U
+  : T extends Promise<infer U>
+  ? U
+  : T;
+
+type UT0 = Unpacked<string>; // string
+type UT1 = Unpacked<string[]>; // string
+type UT2 = Unpacked<() => string>; // string
+type UT3 = Unpacked<Promise<string>>; // string
+type UT4 = Unpacked<Promise<string>[]>; // Promise<string>
+type UT5 = Unpacked<Unpacked<Promise<string>[]>>; // string
