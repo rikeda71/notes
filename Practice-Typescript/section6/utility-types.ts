@@ -255,3 +255,49 @@ type DeepRequiredWrapUser = {
 */
 
 /// などなど。。。
+
+// 独自定義Utility Types
+// TypeScript2.8で導入されたConditional Typesや3.0で導入されたTuple Spreadにより、
+// 既存型から様々な型を抽出したり加工したりすることが可能
+
+/// Unbox
+/// オブジェクトの子ノードをUnion Typesで取得する型
+type unbox<T> = T extends { [K in keyof T]: infer U } ? U : never; // 本当はUnbox。重複しているから小文字にしている
+type T = Unbox<{ a: 'A'; b: 'B'; c: 'C' }>; // type T = 'A' | 'B' | 'C'
+
+/// UnionToIntersection
+/// Union TypesをIntersection Typesに変換する型
+type UTI<T> = T extends any ? (args: T) => void : never;
+type UnionToIntersection<T> = UTI<T> extends (args: infer I) => void
+  ? I
+  : never;
+type A_or_B = { a: 'a' } | { b: 'b' };
+type A_and_B = UnionToIntersection<A_or_B>;
+/*
+type A_and_B = {
+    a: 'a';
+} & {
+    b: 'b';
+}
+*/
+
+/// NonEmptyList型
+/// Genericsに指定した型に該当する要素を、最低でも1つ含む必要がある型
+type NonEmptyList<T> = [T, ...T[]];
+const list1: NonEmptyList<string> = []; // compile error
+const list2: NonEmptyList<string> = ['test'];
+
+/// PickSet型
+/// Setの値型を取得する型
+type PickSet<T> = T extends Set<infer I> ? I : never;
+const set = new Set([1, 2] as const); // const set: Set<1 | 2>
+type SetValues = PickSet<typeof set>; // type SetValues = 1 | 2
+
+/// PickMapKeys型
+/// Mapのキーを取得する型
+const map = new Map([
+  [0, 'foo'],
+  [1, 'bar'],
+] as const);
+type PickMapKeys<T> = T extends Map<infer K, any> ? K : never;
+type MapKeys = PickMapKeys<typeof map>; // type MapKeys = 0 | 1
