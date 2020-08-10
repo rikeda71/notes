@@ -185,3 +185,73 @@ type UT2 = Unpacked<() => string>; // string
 type UT3 = Unpacked<Promise<string>>; // string
 type UT4 = Unpacked<Promise<string>[]>; // Promise<string>
 type UT5 = Unpacked<Unpacked<Promise<string>[]>>; // string
+
+// 再起的なUtility Types
+// Mapped TypesとConditional Typesを併用することで、再起的な型変換が可能
+interface RUser {
+  name: string;
+  age: number;
+  gender: 'male' | 'female' | 'other';
+  birth: {
+    day: Date;
+    place?: {
+      country?: string | null;
+      state?: string;
+    };
+  };
+}
+
+/// isPrimitive型
+/// Object型およびArray型に該当するか否かを判定する型（該当しなければPrimitive型とみなす）
+type Unbox<T> = T extends { [k: string]: infer U }
+  ? U
+  : T extends (infer U)[]
+  ? U
+  : T;
+type isPrimitive<T> = T extends Unbox<T> ? T : never;
+
+/// DeepReadonly型
+/// 再帰的にReadonly変換する型
+type DeepReadonly<T> = {
+  readonly [P in keyof T]: T[P] extends isPrimitive<T[P]>
+    ? T[P]
+    : DeepReadonly<T[P]>;
+};
+type DeepReadonlyWrapUser = DeepReadonly<RUser>;
+/*
+interface DeepReadonlyWrapUser {
+  readonly name: string;
+  readonly age: number;
+  readonly gender: 'male' | 'female' | 'other';
+  readonly birth: {
+    day: Date;
+    place?: {
+      country?: string | null;
+      state?: string;
+    };
+  };
+}
+*/
+
+/// DeepRequired型
+/// 再帰的にRequired変換する型
+type DeepRequired<T> = {
+  [P in keyof T]-?: T[P] extends isPrimitive<T[P]> ? T[P] : DeepRequired<T[P]>;
+};
+type DeepRequiredWrapUser = DeepRequired<RUser>;
+/*
+type DeepRequiredWrapUser = {
+    name: string;
+    age: number;
+    gender: 'male' | 'female' | 'other';
+    birth: DeepRequired<{
+        day: Date;
+        place?: {
+            country?: string | null;
+            state?: string;
+        };
+    }>;
+}
+*/
+
+/// などなど。。。
