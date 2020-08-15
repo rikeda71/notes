@@ -7,6 +7,7 @@ import UseCallback from './fc/usecallback';
 import UseEffect from './fc/useeffect';
 import UseRef from './fc/useref';
 import UseReducer from './fc/usereducer';
+import TypedReducer from './reducer/app';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,9 @@ const App: React.FC = () => {
       <UseEffect />
       <UseRef />
       <UseReducer />
+      <line />
+      {'Reducer'}
+      <TypedReducer />
     </React.Fragment>
   );
 };
