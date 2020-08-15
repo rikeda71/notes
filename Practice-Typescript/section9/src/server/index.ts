@@ -1,11 +1,34 @@
 import Express from 'express'
+import cors from 'cors'
 
 const app = Express()
 
-app.get('/', (req, res) => {
+// cors対応
+app.use(cors())
+
+app.get('/api/health', (req, res) => {
   const data = { message: 'pong' }
   res.send(data)
 })
+
+// Routeに一致しないRequest
+app.use((req, res, next) => {
+  res.sendStatus(404)
+  next({ statusCode: 404 })
+})
+
+// ErrorRoute
+
+app.use(
+  (
+    err: { statusCode: number },
+    req: Express.Request,
+    res: Express.Response,
+    next: Express.NextFunction
+  ) => {
+    console.log(err.statusCode)
+  }
+)
 
 // Express Server の起動
 
