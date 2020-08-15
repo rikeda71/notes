@@ -6,11 +6,11 @@ const Component: React.FC = () => {
   // Nullableにしたい場合
   // const [count, setCount] = useState<number | null>(0);
   const handleClick = useCallback(() => {
-    setCount('0'); // Error
-    setCount((prev) => '3'); // Error
-    setCount((prev) => prev + 1); // OK
+    // setCount('0'); // Error
+    // setCount((prev) => '3'); // Error
+    // setCount((prev) => prev + 1); // OK
     setCount(count + 1);
-  }, []);
+  }, [count]);
   return (
     <div>
       <p>{count}</p>
@@ -18,3 +18,5 @@ const Component: React.FC = () => {
     </div>
   );
 };
+
+export default Component;

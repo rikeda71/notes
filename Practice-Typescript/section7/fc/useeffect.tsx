@@ -13,3 +13,5 @@ const Component: React.FC = () => {
   });
   return <div>{count}</div>;
 };
+
+export default Component;
