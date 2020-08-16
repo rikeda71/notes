@@ -1,10 +1,8 @@
 {
   "name": "ts-express-hands-on",
   "scripts": {
-    "server": "ts-node-dev src/server/index.ts",
-    "client": "parcel src/client/index.html",
-    "start": "node dist/index.js",
-    "prettier": "prettier './src/**/*.ts' --write"
+    "serve": "ts-node-dev src/server/index.ts",
+    "redis": "ts-node-dev src/redis/index.ts"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -15,6 +13,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "http-errors": "^1.8.0",
+    "redis": "^3.0.2",
     "redis-server": "^1.2.2"
   },
   "devDependencies": {
