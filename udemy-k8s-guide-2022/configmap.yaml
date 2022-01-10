@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  TEST_ENV: HELLO_WORLD
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: my-config
