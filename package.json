@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "remark": "^14.0.2",
+    "remark-lint-list-item-bullet-indent": "^4.1.1",
+    "remark-lint-list-item-indent": "^3.1.1"
+  }
+}
