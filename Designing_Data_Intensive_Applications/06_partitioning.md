@@ -22,7 +22,7 @@
 - シャード: 検索エンジン(具体的な ElasticSearch, Solr といったソフトウェアも含む)の文脈やMongoDB において
 - vnode: Cassandra, Riak
 - リージョン: HBase
-- Bigtable: タブレット
+- タブレット: Bigtable
 - vBucket: Couchbase
 
 ## 6.1 パーティショニングとレプリケーション
