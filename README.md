@@ -14,4 +14,5 @@
 
 ## インフラ
 
+- [データ指向アプリケーションデザイン](./Designing_Data_Intensive_Applications/)
 - [米シリコンバレーDevOps監修！超Kubernetes完全入門(2022)【優しい図解説とハンズオン】(Udemy)](./udemy_k8s_guide_2022/)
