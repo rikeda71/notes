@@ -290,7 +290,7 @@ func notify() error {
 }
 ```
 
-## No.54: defer でエラーを処理しない
+## No.54: defer でエラーを処理しない p.172
 
 ### よくある defer の使い方と問題点
 
