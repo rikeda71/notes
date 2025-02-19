@@ -12,6 +12,7 @@
 - [Go言語による並行処理](./Concurrency_in_Go/)
 - [実践TypeScript](./Practice_Typescript/)
 - [Go言語 100Tips ありがちなミスを把握し、実装を最適化する](./Go100Tips/)
+- [関数型ドメインモデリング](./Domain_Modeling_Made_Functional/)
 
 ## インフラ
 
