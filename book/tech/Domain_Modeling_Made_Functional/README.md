@@ -3,15 +3,15 @@
 [書籍](https://tatsu-zine.com/books/domain-modeling-made-functional)
 
 第1部 ドメインの理解
-- [第1章_ドメイン駆動設計の紹介](./01_Introduce_DDD.md)
-- [第2章_ドメインの理解](./02_Understand_Domain.md)
-- [第3章_関数型アーキテクチャ](./03_Functional_Architecture.md)
+- [第1章_ドメイン駆動設計の紹介](01_Introduce_DDD.md)
+- [第2章_ドメインの理解](02_Understand_Domain.md)
+- [第3章_関数型アーキテクチャ](03_Functional_Architecture.md)
 
 第2部 ドメインのモデリング
-- [第4章_型の理解](./04_Understand_Type.md)
-- [第5章_型によるドメインモデリング](./05_Domain_Modeling_with_Types.md)
-- [第6章_ドメインの完全性と整合性](./06_Integrity_and_Consistency_of_Domain.md)
-- [第7章_パイプラインによるワークフローのモデリング](./07_Modeling_of_Workflow_with_Pipeline.md)
+- [第4章_型の理解](04_Understand_Type.md)
+- [第5章_型によるドメインモデリング](05_Domain_Modeling_with_Types.md)
+- [第6章_ドメインの完全性と整合性](06_Integrity_and_Consistency_of_Domain.md)
+- [第7章_パイプラインによるワークフローのモデリング](07_Modeling_of_Workflow_with_Pipeline.md)
 
 第3部 モデルの実装
 
